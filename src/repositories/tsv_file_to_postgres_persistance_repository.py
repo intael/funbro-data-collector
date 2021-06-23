@@ -12,7 +12,7 @@ class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
     def __init__(self) -> None:
         self.__postgres_connection = psycopg2.connect(
             host=os.environ.get("POSTGRES_DATABASE_HOST_FIELD"),
-            dbname="funbro",
+            dbname=os.environ.get("POSTGRES_DATABASE_NAME"),
             user=os.environ.get("POSTGRES_DATABASE_USER_FIELD"),
             password=os.environ.get("POSTGRES_DATABASE_PASSWORD_FIELD"),
         )
@@ -35,6 +35,7 @@ class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
                 )
                 self.__postgres_connection.commit()
         self.__postgres_connection.close()
+        os.remove(file_path)
 
     def __truncate_table(self, dataset: Dataset) -> None:
         with self.__postgres_connection.cursor() as cursor:

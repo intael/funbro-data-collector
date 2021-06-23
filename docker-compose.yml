@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 
 services:
 
@@ -8,6 +8,7 @@ services:
       context: .
     container_name: funbro-data-collector
     environment:
+      - POSTGRES_DATABASE_NAME=funbro
       - POSTGRES_DATABASE_HOST_FIELD=172.28.1.2 # see db service below, this is a local network
       - POSTGRES_DATABASE_PORT_FIELD=5432
       - POSTGRES_DATABASE_USER_FIELD=test_user

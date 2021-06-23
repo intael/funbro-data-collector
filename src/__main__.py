@@ -6,8 +6,9 @@ from typing import Dict, Any, Set
 
 from src.cli.exceptions import CLIArgumentCanNotBeParsed
 from src.cli.subparsers import build_subparsers, DATA_SOURCE, DATASETS_ARGUMENT
-from src.collector_runner import run_collector
+from src.collectors.collector_factory import CollectorFactory
 from src.collectors.collectors_container import CollectorsContainer
+from src.collectors.data_source_collector import DataSourceCollector
 from src.datasets import Dataset
 from src.datasources import DataSource
 
@@ -48,5 +49,5 @@ datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
 if __name__ == "__main__":
     container = CollectorsContainer()
     container.wire(modules=[sys.modules[__name__]])
-
-    run_collector(data_source, datasets)
+    collector: DataSourceCollector = CollectorFactory.build_collector(data_source)
+    collector.collect(datasets)

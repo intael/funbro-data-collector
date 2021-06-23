@@ -5,8 +5,8 @@ export DATABASE=db
 
 .PHONY: run
 run:
-	docker exec $(CONTAINER) python main.py --num_cores 4 autoscout --task AUTOSCOUT_CRAWLER --countries ALL --body_colors ALL --makes ALL --bodies ALL --freg_from 2014 --min_doors ALL
-
+	docker-compose run $(CONTAINER) python -m src IMDB_DAILY --dataset ALL
+	docker-compose stop $(CONTAINER)
 .PHONY: bash
 bash:
 	docker-compose run $(CONTAINER) bash
@@ -17,11 +17,11 @@ build:
 
 .PHONY: database
 database:
-	docker exec -ti $(DATABASE) mysql -u root -passwd -D business_intelligence
+	docker exec -ti $(DATABASE) PGPASSWORD=test psql -h 172.28.1.2 -U test_user -c '\q'
 
 .PHONY: rebuild_db
 rebuild_db:
-	docker-compose rm db && docker-compose stop db && docker-compose up db
+	docker-compose stop $(DATABASE) &&  echo "Y" | docker-compose rm $(DATABASE) && docker-compose up $(DATABASE)
 
 .PHONY: test
 test:
