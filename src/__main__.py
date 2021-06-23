@@ -47,7 +47,5 @@ datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
 
 
 if __name__ == "__main__":
-    container = CollectorsContainer()
-    container.wire(modules=[sys.modules[__name__]])
     collector: DataSourceCollector = CollectorFactory.build_collector(data_source)
     collector.collect(datasets)

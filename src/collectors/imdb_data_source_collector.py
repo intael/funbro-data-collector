@@ -38,7 +38,7 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector):
     def collect(self, datasets: Set[Dataset]) -> None:
         parsed_dataset_enums: Set[Dataset] = self.handle_cli_enums(
             set(type(list(datasets)[0])), datasets, type(list(datasets)[0]).ALL
-        )
+        )  # this parsing of the datasets enum is done here because other collectors might not need to do this parsing
         asyncio.run(self.__downloader.download(parsed_dataset_enums))
         usable_cores: int = min(
             multiprocessing.cpu_count() - 1, len(parsed_dataset_enums)
