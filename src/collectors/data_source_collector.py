@@ -3,8 +3,8 @@ from typing import Set, Optional, TypeVar
 
 from typeguard import typechecked
 
-from cli.cli_parsable import CLIParsableEnum
-from datasets import Dataset
+from src.cli.cli_parsable import CLIParsableEnum
+from src.datasets import Dataset
 
 T = TypeVar("T", bound=CLIParsableEnum)
 

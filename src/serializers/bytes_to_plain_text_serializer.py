@@ -1,7 +1,7 @@
 import gzip
 
-from raw_data_container import RawData
-from serializers.serializer import Serializer
+from src.raw_data_container import RawData
+from src.serializers.serializer import Serializer
 
 
 class BytesToPlainTextFileSerializer(Serializer):

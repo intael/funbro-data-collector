@@ -3,9 +3,9 @@ import os
 
 import psycopg2
 
-from datasets import Dataset
-from repositories.dataset_persistance_repository import DatasetPersistanceRepository
-from serializers.serializers_container import SerializersContainer
+from src.datasets import Dataset
+from src.repositories.dataset_persistance_repository import DatasetPersistanceRepository
+from src.serializers.serializers_container import SerializersContainer
 
 
 class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):

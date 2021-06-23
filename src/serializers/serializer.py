@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from raw_data_container import RawData, T
+from src.raw_data_container import RawData, T
 
 
 class Serializer(ABC):

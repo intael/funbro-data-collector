@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 
-from serializers.bytes_to_plain_text_serializer import BytesToPlainTextFileSerializer
+from src.serializers.bytes_to_plain_text_serializer import BytesToPlainTextFileSerializer
 
 
 class SerializersContainer(containers.DeclarativeContainer):

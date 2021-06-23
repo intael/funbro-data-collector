@@ -1,13 +1,13 @@
 from asyncio import as_completed
 from typing import Set
 
-from datasets import Dataset
-from downloaders.downloader import AsyncDonwloader
-from repositories.dataset_source_repository import DatasetSourceRepository
-from serializers.serializer import Serializer
+from src.datasets import Dataset
+from src.downloaders.downloader import AsyncDownloader
+from src.repositories.dataset_source_repository import DatasetSourceRepository
+from src.serializers.serializer import Serializer
 
 
-class GenericAsyncDownloader(AsyncDonwloader):
+class GenericAsyncDownloader(AsyncDownloader):
     def __init__(
         self,
         dataset_repository: DatasetSourceRepository,

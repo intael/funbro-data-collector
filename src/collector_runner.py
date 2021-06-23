@@ -3,9 +3,9 @@ from typing import Set
 from dependency_injector import providers
 from dependency_injector.wiring import inject, Provider
 
-from collectors.collectors_container import CollectorsContainer
-from datasets import Dataset
-from datasources import DataSource
+from src.collectors.collectors_container import CollectorsContainer
+from src.datasets import Dataset
+from src.datasources import DataSource
 
 
 @inject

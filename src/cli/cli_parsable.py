@@ -2,7 +2,7 @@ from enum import unique, Enum
 
 from typeguard import typechecked
 
-from cli.exceptions import CLIArgumentCanNotBeParsed
+from src.cli.exceptions import CLIArgumentCanNotBeParsed
 
 
 @unique

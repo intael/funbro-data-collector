@@ -1,10 +1,10 @@
 from dependency_injector import containers, providers
 from httpx import AsyncClient
 
-from repositories.imdb_daily_updated_dataset_repository import (
+from src.repositories.imdb_daily_updated_dataset_repository import (
     ImdbDailyUpdatedDatasetSourceRepository,
 )
-from repositories.tsv_file_to_postgres_persistance_repository import (
+from src.repositories.tsv_file_to_postgres_persistance_repository import (
     TSVFileToPostgresPersistanceRepository,
 )
 

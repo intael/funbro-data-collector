@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 
-from datasets import ImdbDailyUpdatedDataset
-from datasources import DataSource
+from src.datasets import ImdbDailyUpdatedDataset
+from src.datasources import DataSource
 
 DATA_SOURCE = "data_source"
 DATASETS_ARGUMENT = "datasets"

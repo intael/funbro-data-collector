@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from datasets import Dataset
+from src.datasets import Dataset
 
 
 class DatasetPersistanceRepository(ABC):

@@ -6,10 +6,11 @@ from typing import Set
 
 from dependency_injector.wiring import Provider
 
-from collectors.data_source_collector import DataSourceCollector
-from datasets import Dataset
-from downloaders.downloader import AsyncDonwloader
-from repositories.dataset_persistance_repository import DatasetPersistanceRepository
+from src.collectors.data_source_collector import DataSourceCollector
+from src.datasets import Dataset
+from src.repositories.dataset_persistance_repository import DatasetPersistanceRepository
+
+from src.downloaders.downloader import AsyncDownloader
 
 
 def _persist_collected_datasets(
@@ -22,7 +23,7 @@ def _persist_collected_datasets(
 class ImdbDailyUpdatedDatasetCollector(DataSourceCollector):
     def __init__(
         self,
-        downloader: AsyncDonwloader,
+        downloader: AsyncDownloader,
         dataset_persistence_repo_provider: Provider[DatasetPersistanceRepository],
     ):
         """

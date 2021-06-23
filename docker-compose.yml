@@ -12,7 +12,7 @@ services:
       - POSTGRES_DATABASE_PORT_FIELD=5432
       - POSTGRES_DATABASE_USER_FIELD=test_user
       - POSTGRES_DATABASE_PASSWORD_FIELD=test
-    # entrypoint: ["./wait-for-db.sh", "db", "--"]
+#    entrypoint: ["./wait-for-db.sh", "db", "--"] # disabled for Pycharm compatibility, enable it if you need to check stuff on the container
     volumes:
       - .:/app
     depends_on:

@@ -3,7 +3,7 @@ import logging
 from httpx import AsyncClient
 from typeguard import typechecked
 
-from raw_data_container import RawData
+from src.raw_data_container import RawData
 from src.datasets import Dataset
 from src.repositories.dataset_source_repository import DatasetSourceRepository
 

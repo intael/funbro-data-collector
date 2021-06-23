@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import TypeVar, Generic
 
-from datasets import Dataset
+from src.datasets import Dataset
 
 T = TypeVar("T")
 

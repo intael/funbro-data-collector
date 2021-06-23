@@ -1,6 +1,6 @@
 from enum import auto
 
-from cli.cli_parsable import CLIParsableEnum
+from src.cli.cli_parsable import CLIParsableEnum
 
 
 class Dataset(CLIParsableEnum):

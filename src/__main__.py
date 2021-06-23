@@ -4,14 +4,12 @@ import sys
 from typing import Dict, Any, Set
 
 
-from cli.exceptions import CLIArgumentCanNotBeParsed
-from cli.subparsers import build_subparsers, DATA_SOURCE, DATASETS_ARGUMENT
-from collector_runner import run_collector
-from collectors.collectors_container import CollectorsContainer
-from datasets import Dataset
-from datasources import DataSource
-from repositories.repositories_container import RepositoriesContainer
-from serializers.serializers_container import SerializersContainer
+from src.cli.exceptions import CLIArgumentCanNotBeParsed
+from src.cli.subparsers import build_subparsers, DATA_SOURCE, DATASETS_ARGUMENT
+from src.collector_runner import run_collector
+from src.collectors.collectors_container import CollectorsContainer
+from src.datasets import Dataset
+from src.datasources import DataSource
 
 format_str = "%(asctime)s [%(name)s - %(levelname)-5.5s]  %(message)s"
 logging.basicConfig(
@@ -49,10 +47,6 @@ datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
 
 if __name__ == "__main__":
     container = CollectorsContainer()
-    container.wire(
-        modules=[
-            sys.modules[__name__]
-        ]
-    )
+    container.wire(modules=[sys.modules[__name__]])
 
     run_collector(data_source, datasets)

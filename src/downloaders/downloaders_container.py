@@ -1,8 +1,8 @@
 from dependency_injector import containers, providers
 
-from downloaders.generic_downloader import GenericAsyncDownloader
-from repositories.repositories_container import RepositoriesContainer
-from serializers.serializers_container import SerializersContainer
+from src.downloaders.generic_downloader import GenericAsyncDownloader
+from src.repositories.repositories_container import RepositoriesContainer
+from src.serializers.serializers_container import SerializersContainer
 
 
 class DownloadersContainer(containers.DeclarativeContainer):
