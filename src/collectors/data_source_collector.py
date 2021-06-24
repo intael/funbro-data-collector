@@ -20,21 +20,13 @@ class DataSourceCollector(ABC):
         cls,
         all_constant_values: Set[T],
         chosen_constant_values: Set[T],
-        all_constant: Optional[T] = None,
-    ) -> Optional[Set[T]]:
-        if (
-            all_constant
-            and len(chosen_constant_values) > 1
-            and all_constant in chosen_constant_values
-        ):
+        all_constant: T,
+    ) -> Set[T]:
+        if len(chosen_constant_values) > 1 and all_constant in chosen_constant_values:
             raise ValueError(
                 f"The 'ALL' token has been chosen for the dimension {type(all_constant).__name__}, but it is not the only one. Choose either ALL or a few from this list: {set(type(all_constant))}"
             )
-        elif not all_constant and all_constant in chosen_constant_values:
-            raise ValueError(
-                f"The 'ALL' token has been chosen for the dimension {type(all_constant).__name__}, but it has not been included in the call ('all_constant' argument)."
-            )
-        elif all_constant and all_constant in chosen_constant_values:
+        elif all_constant in chosen_constant_values:
             all_constant_values.remove(all_constant)
             return all_constant_values
         else:
