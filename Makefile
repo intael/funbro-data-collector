@@ -13,7 +13,7 @@ bash:
 
 .PHONY: build
 build:
-	docker-compose up --build
+	docker-compose build --no-cache $(CONTAINER)
 
 .PHONY: database
 database:

@@ -9,9 +9,9 @@ RUN pip install --upgrade pip
 RUN useradd -m funbro-data-collector
 USER funbro-data-collector
 COPY requirements.txt requirements.txt
-RUN pip install --user -r requirements.txt
 ENV PATH="/home/funbro-data-collector/.local/bin:${PATH}"
-COPY . .
+RUN pip install --user -r requirements.txt
 
 WORKDIR /app
+
 COPY . .

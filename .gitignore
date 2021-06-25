@@ -68,3 +68,6 @@ cover/
 # data file formats
 *.tsv
 *.csv
+
+# credentials
+.credentials/*.pem

@@ -94,3 +94,6 @@ venv/
 */*/*/*.swp
 
 staging/*
+
+# credentials
+.credentials/*.pem

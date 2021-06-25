@@ -15,6 +15,10 @@ class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
             dbname=os.environ.get("POSTGRES_DATABASE_NAME"),
             user=os.environ.get("POSTGRES_DATABASE_USER_FIELD"),
             password=os.environ.get("POSTGRES_DATABASE_PASSWORD_FIELD"),
+            sslmode="require",
+            sslcert=os.environ.get("POSTGRES_DATABASE_CLIENT_CERT_PATH"),
+            sslkey=os.environ.get("POSTGRES_DATABASE_CLIENT_KEY_PATH"),
+            sslrootcert=os.environ.get("POSTGRES_DATABASE_SERVER_CA_PATH"),
         )
         self.__logger = logging.getLogger(self.__class__.__name__)
 
