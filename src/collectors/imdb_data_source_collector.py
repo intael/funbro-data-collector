@@ -8,7 +8,6 @@ from dependency_injector.wiring import Provider
 
 from src.collectors.data_source_collector import DataSourceCollector
 from src.datasets import Dataset
-from src.repositories.dataset_persistance_repository import DatasetPersistanceRepository
 
 from src.downloaders.downloader import AsyncDownloader
 
