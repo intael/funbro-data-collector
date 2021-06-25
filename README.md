@@ -1,6 +1,6 @@
 # Funbro Data Collector
 
-This project downloads data from whatever sources and makes them available in raw in some persistance storages.
+This project downloads data from whatever sources and makes it available in some persistance storage.
 
 ### Running it
 
