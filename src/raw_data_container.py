@@ -1,9 +1,9 @@
 from dataclasses import dataclass
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Union
 
 from src.datasets import Dataset
 
-T = TypeVar("T")
+T = TypeVar("T", bound=Union[bytes])
 
 
 @dataclass(frozen=True)

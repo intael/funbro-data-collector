@@ -15,7 +15,7 @@ from src.downloaders.downloader import AsyncDownloader
 
 def _persist_collected_datasets(
     dataset: Dataset,
-    dataset_persistence_repo_provider: Provider[DatasetPersistanceRepository],
+    dataset_persistence_repo_provider: Provider,
 ) -> None:
     dataset_persistence_repo_provider().save(dataset)
 
@@ -24,7 +24,7 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector):
     def __init__(
         self,
         downloader: AsyncDownloader,
-        dataset_persistence_repo_provider: Provider[DatasetPersistanceRepository],
+        dataset_persistence_repo_provider: Provider,
     ):
         """
         dataset_persistence_repo_provider is a provider because we need to instantiate it
