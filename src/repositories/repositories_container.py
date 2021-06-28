@@ -1,10 +1,10 @@
 from dependency_injector import containers, providers
 from httpx import AsyncClient
 
-from src.repositories.postgres.connection_arguments import PostgresConnectionArguments
 from src.repositories.imdb_daily_updated_dataset_repository import (
     ImdbDailyUpdatedDatasetSourceRepository,
 )
+from src.repositories.postgres.connection_arguments import PostgresConnectionArguments
 from src.repositories.tsv_file_to_postgres_persistance_repository import (
     TSVFileToPostgresPersistanceRepository,
 )
@@ -12,7 +12,9 @@ from src.repositories.tsv_file_to_postgres_persistance_repository import (
 
 class RepositoriesContainer(containers.DeclarativeContainer):
 
-    postgres_conn_args = providers.Singleton(PostgresConnectionArguments)
+    postgres_conn_args = providers.Singleton(
+        PostgresConnectionArguments,
+    )
 
     http_client = providers.Singleton(AsyncClient, timeout=60)
 

@@ -10,7 +10,7 @@ services:
     env_file:
       - .env.dev
     volumes:
-    - .:/app:ro
+    - .:/app
     depends_on:
       - "db"
     networks:

@@ -3,9 +3,9 @@ import os
 
 import psycopg2
 
-from src.repositories.postgres.connection_arguments import PostgresConnectionArguments
 from src.datasets import Dataset
 from src.repositories.dataset_persistance_repository import DatasetPersistanceRepository
+from src.repositories.postgres.connection_arguments import PostgresConnectionArguments
 from src.serializers.serializers_container import SerializersContainer
 
 
@@ -13,9 +13,9 @@ class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
     def __init__(
         self, postgres_connection_arguments: PostgresConnectionArguments
     ) -> None:
-        self.__postgres_connection = psycopg2.connect(
-            **postgres_connection_arguments.dict()
-        )
+        connection_args = postgres_connection_arguments.dict()
+        connection_args.pop("environment")
+        self.__postgres_connection = psycopg2.connect(**connection_args)
         self.__logger = logging.getLogger(self.__class__.__name__)
 
     def save(self, dataset: Dataset) -> None:

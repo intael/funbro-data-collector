@@ -48,5 +48,5 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector):
                     _persist_collected_datasets,
                     dataset_persistence_repo_provider=self.__dataset_persistence_repo_provider,
                 ),
-                parsed_dataset_enums
+                parsed_dataset_enums,
             )
