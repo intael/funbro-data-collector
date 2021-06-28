@@ -10,16 +10,22 @@ from src.serializers.serializers_container import SerializersContainer
 
 class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
     def __init__(self) -> None:
-        self.__postgres_connection = psycopg2.connect(
+        connection_arguments = dict(
             host=os.environ.get("POSTGRES_DATABASE_HOST_FIELD"),
             dbname=os.environ.get("POSTGRES_DATABASE_NAME"),
             user=os.environ.get("POSTGRES_DATABASE_USER_FIELD"),
             password=os.environ.get("POSTGRES_DATABASE_PASSWORD_FIELD"),
-            sslmode="require",
-            sslcert=os.environ.get("POSTGRES_DATABASE_CLIENT_CERT_PATH"),
-            sslkey=os.environ.get("POSTGRES_DATABASE_CLIENT_KEY_PATH"),
-            sslrootcert=os.environ.get("POSTGRES_DATABASE_SERVER_CA_PATH"),
         )
+        if os.environ.get("ENVIRONMENT", "development") == "production":
+            connection_arguments.update(
+                **dict(
+                    sslmode="require",
+                    sslcert=os.environ.get("POSTGRES_DATABASE_CLIENT_CERT_PATH"),
+                    sslkey=os.environ.get("POSTGRES_DATABASE_CLIENT_KEY_PATH"),
+                    sslrootcert=os.environ.get("POSTGRES_DATABASE_SERVER_CA_PATH"),
+                )
+            )
+        self.__postgres_connection = psycopg2.connect(**connection_arguments)
         self.__logger = logging.getLogger(self.__class__.__name__)
 
     def save(self, dataset: Dataset) -> None:
