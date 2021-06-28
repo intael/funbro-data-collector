@@ -1,16 +1,13 @@
 import argparse
 import logging
 import os
-import shutil
-import stat
 import sys
 from typing import Dict, Any, Set
 
-from files_util import FilesUtil
+from src.files_util import FilesUtil
 from src.cli.exceptions import CLIArgumentCanNotBeParsed
 from src.cli.subparsers import build_subparsers, DATA_SOURCE, DATASETS_ARGUMENT
 from src.collectors.collector_factory import CollectorFactory
-from src.collectors.collectors_container import CollectorsContainer
 from src.collectors.data_source_collector import DataSourceCollector
 from src.datasets import Dataset
 from src.datasources import DataSource
@@ -56,5 +53,4 @@ datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
 if __name__ == "__main__":
     collector: DataSourceCollector = CollectorFactory.build_collector(data_source)
     collector.collect(datasets)
-    for file in {file for file in os.listdir("staging") if file != ".gitkeep"}:
-        FilesUtil.remove_dir_files("staging", [".gitkeep"])
+    FilesUtil.remove_dir_files("staging", [".gitkeep"])

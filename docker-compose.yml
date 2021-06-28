@@ -7,12 +7,10 @@ services:
       dockerfile: docker/Dockerfile
       context: .
     container_name: funbro-data-collector
-    environment:
-      - ENVIRONMENT=production # either development or production
     env_file:
-      - .env
+      - .env.dev
     volumes:
-    - .credentials:/app/.credentials:ro
+    - .:/app:ro
     depends_on:
       - "db"
     networks:

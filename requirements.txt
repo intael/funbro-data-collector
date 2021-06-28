@@ -8,3 +8,4 @@ pytest-cov > 2, < 3
 hypothesis > 6, < 7
 typeguard > 2, < 3
 dependency-injector > 4, < 5
+pydantic > 1, < 2
