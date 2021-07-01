@@ -7,15 +7,10 @@ services:
       dockerfile: docker/Dockerfile
       context: .
     container_name: funbro-data-collector
-    environment:
-      - POSTGRES_DATABASE_NAME=funbro
-      - POSTGRES_DATABASE_HOST_FIELD=172.28.1.2 # see db service below, this is a local network
-      - POSTGRES_DATABASE_PORT_FIELD=5432
-      - POSTGRES_DATABASE_USER_FIELD=test_user
-      - POSTGRES_DATABASE_PASSWORD_FIELD=test
-#    entrypoint: ["./wait-for-db.sh", "db", "--"] # disabled for Pycharm compatibility, enable it if you need to check stuff on the container
+    env_file:
+      - .env.dev
     volumes:
-      - .:/app
+    - .:/app
     depends_on:
       - "db"
     networks:
@@ -24,11 +19,11 @@ services:
 
   db:
     container_name: postgres-db
-    image: postgres:11
+    image: postgres:13
     cap_add:
       - SYS_NICE
     environment:
-      - POSTGRES_DATABASE=databases
+      - POSTGRES_DATABASE=funbro
       - POSTGRES_USER=test_user
       - POSTGRES_PASSWORD=test
       - POSTGRES_MULTIPLE_DATABASES=funbro
@@ -36,7 +31,7 @@ services:
       - 5432:5432
     restart: always
     volumes:
-      - ./docker/postgres:/docker-entrypoint-initdb.d:rw
+      - ./docker/postgres:/docker-entrypoint-initdb.d:ro
     networks:
       funbro-data-collector-network:
         ipv4_address: 172.28.1.2

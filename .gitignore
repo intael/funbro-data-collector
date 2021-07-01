@@ -32,9 +32,6 @@ MANIFEST
 *.manifest
 *.spec
 
-# Development stuff
-.env
-
 # Installer logs
 pip-log.txt
 pip
@@ -71,3 +68,6 @@ cover/
 
 # credentials
 .credentials/*.pem
+
+# leftover files
+staging/

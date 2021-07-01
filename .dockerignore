@@ -73,7 +73,6 @@ docs/_build/
 target/
 
 # Virtual environment
-.env
 .env/
 .venv/
 venv/
@@ -97,3 +96,4 @@ staging/*
 
 # credentials
 .credentials/*.pem
+.env

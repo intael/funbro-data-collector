@@ -5,21 +5,17 @@ import psycopg2
 
 from src.datasets import Dataset
 from src.repositories.dataset_persistance_repository import DatasetPersistanceRepository
+from src.repositories.postgres.connection_arguments import PostgresConnectionArguments
 from src.serializers.serializers_container import SerializersContainer
 
 
 class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
-    def __init__(self) -> None:
-        self.__postgres_connection = psycopg2.connect(
-            host=os.environ.get("POSTGRES_DATABASE_HOST_FIELD"),
-            dbname=os.environ.get("POSTGRES_DATABASE_NAME"),
-            user=os.environ.get("POSTGRES_DATABASE_USER_FIELD"),
-            password=os.environ.get("POSTGRES_DATABASE_PASSWORD_FIELD"),
-            sslmode="require",
-            sslcert=os.environ.get("POSTGRES_DATABASE_CLIENT_CERT_PATH"),
-            sslkey=os.environ.get("POSTGRES_DATABASE_CLIENT_KEY_PATH"),
-            sslrootcert=os.environ.get("POSTGRES_DATABASE_SERVER_CA_PATH"),
-        )
+    def __init__(
+        self, postgres_connection_arguments: PostgresConnectionArguments
+    ) -> None:
+        connection_args = postgres_connection_arguments.dict()
+        connection_args.pop("environment")
+        self.__postgres_connection = psycopg2.connect(**connection_args)
         self.__logger = logging.getLogger(self.__class__.__name__)
 
     def save(self, dataset: Dataset) -> None:

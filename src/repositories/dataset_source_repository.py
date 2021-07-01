@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Union
+from typing import TypeVar, Union, Generic
 
 from src.datasets import Dataset
 from src.raw_data_container import RawData
 
-T = TypeVar("T", bound=Union[bytes])
+T = TypeVar("T")
 
 
-class DatasetSourceRepository(ABC):
+class DatasetSourceRepository(ABC, Generic[T]):
     @abstractmethod
     async def get(self, dataset: Dataset) -> RawData[T]:
         raise NotImplementedError()

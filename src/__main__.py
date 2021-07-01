@@ -1,13 +1,13 @@
 import argparse
 import logging
+import os
 import sys
 from typing import Dict, Any, Set
 
-
+from src.files_util import FilesUtil
 from src.cli.exceptions import CLIArgumentCanNotBeParsed
 from src.cli.subparsers import build_subparsers, DATA_SOURCE, DATASETS_ARGUMENT
 from src.collectors.collector_factory import CollectorFactory
-from src.collectors.collectors_container import CollectorsContainer
 from src.collectors.data_source_collector import DataSourceCollector
 from src.datasets import Dataset
 from src.datasources import DataSource
@@ -42,6 +42,10 @@ except CLIArgumentCanNotBeParsed as cli_error:
 
 logger.setLevel(logging.DEBUG if arguments["debug"] else logging.INFO)
 
+if os.environ.get("ENVIRONMENT", "development") == "production":
+    FilesUtil.copy_dir_files(".credentials", "staging", [".gitkeep"])
+    FilesUtil.change_dir_files_permissions("staging", [".gitkeep"])
+
 data_source: DataSource = DataSource[arguments[DATA_SOURCE]]
 datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
 
@@ -49,3 +53,4 @@ datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
 if __name__ == "__main__":
     collector: DataSourceCollector = CollectorFactory.build_collector(data_source)
     collector.collect(datasets)
+    FilesUtil.remove_dir_files("staging", [".gitkeep"])
