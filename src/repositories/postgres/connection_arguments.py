@@ -11,6 +11,7 @@ class PostgresConnectionArguments(BaseSettings):
     host: str = Field(env="POSTGRES_DATABASE_HOST_FIELD")
     dbname: str = Field(env="POSTGRES_DATABASE_NAME")
     user: str = Field(env="POSTGRES_DATABASE_USER_FIELD")
+    port: str = Field(env="POSTGRES_DATABASE_PORT_FIELD")
     password: str = Field(env="POSTGRES_DATABASE_PASSWORD_FIELD")
     sslmode: str = Field(env="POSTGRES_SSL_MODE")
     sslcert: Optional[str] = Field(env="POSTGRES_DATABASE_CLIENT_CERT_PATH")
