@@ -4,6 +4,7 @@ import os
 import sys
 from typing import Dict, Any, Set
 
+from src.environment import Environment
 from src.files_util import FilesUtil
 from src.cli.exceptions import CLIArgumentCanNotBeParsed
 from src.cli.subparsers import build_subparsers, DATA_SOURCE, DATASETS_ARGUMENT
@@ -42,7 +43,8 @@ except CLIArgumentCanNotBeParsed as cli_error:
 
 logger.setLevel(logging.DEBUG if arguments["debug"] else logging.INFO)
 
-if os.environ.get("ENVIRONMENT", "development") == "production":
+environment: str = os.environ.get("ENVIRONMENT", Environment.DEVELOPMENT.name).upper()
+if Environment[environment] == Environment.PRODUCTION:
     FilesUtil.copy_dir_files(".credentials", "staging", [".gitkeep"])
     FilesUtil.change_dir_files_permissions("staging", [".gitkeep"])
 
