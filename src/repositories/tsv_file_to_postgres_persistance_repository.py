@@ -36,6 +36,7 @@ class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
                 self.__postgres_connection.commit()
         self.__postgres_connection.close()
         os.remove(file_path)
+        self.__logger.info(f"Dataset {dataset.name} loaded successfully to Postgres.")
 
     def __truncate_table(self, dataset: Dataset) -> None:
         with self.__postgres_connection.cursor() as cursor:

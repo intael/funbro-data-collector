@@ -5,7 +5,7 @@ export DATABASE=db
 
 .PHONY: run
 run:
-	docker-compose run --rm $(CONTAINER) python -m src IMDB_DAILY --datasets TITLE_RATINGS
+	docker-compose run --rm $(CONTAINER) python -m src IMDB_DAILY --datasets ALL
 	docker-compose stop $(CONTAINER)
 .PHONY: bash
 bash:
