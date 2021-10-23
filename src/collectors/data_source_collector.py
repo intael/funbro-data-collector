@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Set, TypeVar, Generic
+from typing import Generic, Set, TypeVar
 
 from typeguard import typechecked
 

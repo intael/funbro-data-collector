@@ -10,9 +10,7 @@ from src.serializers.serializers_container import SerializersContainer
 
 
 class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
-    def __init__(
-        self, postgres_connection_arguments: PostgresConnectionArguments
-    ) -> None:
+    def __init__(self, postgres_connection_arguments: PostgresConnectionArguments) -> None:
         connection_args = postgres_connection_arguments.dict()
         connection_args.pop("environment")
         self.__postgres_connection = psycopg2.connect(**connection_args)
@@ -20,8 +18,7 @@ class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
 
     def save(self, dataset: Dataset) -> None:
         file_path: str = (
-            os.path.join(".", SerializersContainer.STAGING_DIR_PATH, dataset.name)
-            + ".tsv"
+            os.path.join(".", SerializersContainer.STAGING_DIR_PATH, dataset.name) + ".tsv"
         )
         self.__logger.info(f"Truncating staging.{dataset.name} table.")
         self.__truncate_table(dataset)

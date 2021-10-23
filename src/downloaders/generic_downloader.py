@@ -1,6 +1,6 @@
 from asyncio import as_completed
-from typing import Set, List
 from collections.abc import Coroutine
+from typing import List, Set
 
 from src.datasets import Dataset
 from src.downloaders.downloader import AsyncDownloader

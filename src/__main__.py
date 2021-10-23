@@ -1,12 +1,12 @@
 import logging
 import sys
-from typing import Dict, Any, Set
+from typing import Any, Dict, Set
 
 from cli.argument_parser_factory import (
-    build_argument_parser,
     DATA_SOURCE,
     DATASETS_ARGUMENT,
     DEBUG_FLAG,
+    build_argument_parser,
 )
 from src.cli.exceptions import CLIArgumentCanNotBeParsed
 from src.collectors.collector_factory import CollectorFactory

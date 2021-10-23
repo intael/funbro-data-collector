@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import TypeVar, Generic, Union
+from typing import Generic, TypeVar, Union
 
 from src.datasets import Dataset
 

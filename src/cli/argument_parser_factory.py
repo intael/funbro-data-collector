@@ -40,9 +40,7 @@ def _attach_datasource_subparser(
         f"--{DATASETS_ARGUMENT}",
         required=True,
         nargs="+",
-        type=functools.partial(
-            parse_cli_string_to_enum, enum_type=ImdbDailyUpdatedDataset
-        ),
+        type=functools.partial(parse_cli_string_to_enum, enum_type=ImdbDailyUpdatedDataset),
         choices=set(ImdbDailyUpdatedDataset),
         help="Datasets to download",
     )

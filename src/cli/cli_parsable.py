@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from typing import TypeVar, Type
-from enum import unique, Enum
+from enum import Enum, unique
+from typing import Type, TypeVar
 
 from src.cli.exceptions import CLIArgumentCanNotBeParsed
 
