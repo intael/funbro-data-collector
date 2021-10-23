@@ -13,9 +13,6 @@ services:
     - .:/app
     depends_on:
       - "db"
-    networks:
-      funbro-data-collector-network:
-        ipv4_address: 172.28.1.1
 
   db:
     container_name: postgres-db
@@ -28,17 +25,11 @@ services:
       - POSTGRES_PASSWORD=test
       - POSTGRES_MULTIPLE_DATABASES=funbro
     ports:
-      - 5432:5432
+      - "5432:5432"
     restart: always
     volumes:
+      - postgres-volume:/var/lib/postgresql/data
       - ./docker/postgres:/docker-entrypoint-initdb.d:ro
-    networks:
-      funbro-data-collector-network:
-        ipv4_address: 172.28.1.2
 
-networks:
-  funbro-data-collector-network:
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.28.0.0/16
+volumes:
+  postgres-volume:

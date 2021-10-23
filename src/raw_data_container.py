@@ -3,7 +3,7 @@ from typing import TypeVar, Generic, Union
 
 from src.datasets import Dataset
 
-T = TypeVar("T", bound=Union[bytes])
+T = TypeVar("T")
 
 
 @dataclass(frozen=True)

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Union, Generic
+from typing import TypeVar, Generic
 
 from src.datasets import Dataset
 from src.raw_data_container import RawData

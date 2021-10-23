@@ -1,17 +1,16 @@
 from abc import ABC, abstractmethod
-from typing import Set, Optional, TypeVar
+from typing import Set, TypeVar, Generic
 
 from typeguard import typechecked
 
-from src.cli.cli_parsable import CLIParsableEnum
 from src.datasets import Dataset
 
-T = TypeVar("T", bound=CLIParsableEnum)
+T = TypeVar("T", bound=Dataset, covariant=True)
 
 
-class DataSourceCollector(ABC):
+class DataSourceCollector(ABC, Generic[T]):
     @abstractmethod
-    def collect(self, datasets: Set[Dataset]) -> None:
+    def collect(self, datasets: Set[T]) -> None:
         raise NotImplementedError()
 
     @classmethod
@@ -20,14 +19,14 @@ class DataSourceCollector(ABC):
         cls,
         all_constant_values: Set[T],
         chosen_constant_values: Set[T],
-        all_constant: T,
+        all_constant: Dataset,
     ) -> Set[T]:
         if len(chosen_constant_values) > 1 and all_constant in chosen_constant_values:
             raise ValueError(
-                f"The 'ALL' token has been chosen for the dimension {type(all_constant).__name__}, but it is not the only one. Choose either ALL or a few from this list: {set(type(all_constant))}"
+                f"The 'ALL' token has been chosen for the dimension {type(all_constant).__name__}, but it is not the"
+                f" only one. Choose either ALL or a few from this list: {set(type(all_constant))}"
             )
         elif all_constant in chosen_constant_values:
-            all_constant_values.remove(all_constant)
-            return all_constant_values
+            return {value for value in all_constant_values if value != all_constant}
         else:
             return chosen_constant_values

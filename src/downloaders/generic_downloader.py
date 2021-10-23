@@ -9,7 +9,7 @@ from src.repositories.dataset_source_repository import DatasetSourceRepository
 from src.serializers.serializer import Serializer
 
 
-class GenericAsyncDownloader(AsyncDownloader):
+class GenericAsyncDownloader(AsyncDownloader[Dataset]):
     def __init__(
         self,
         dataset_repository: DatasetSourceRepository,

@@ -7,7 +7,7 @@ from typing import Set
 from dependency_injector.wiring import Provider
 
 from src.collectors.data_source_collector import DataSourceCollector
-from src.datasets import Dataset
+from src.datasets import Dataset, ImdbDailyUpdatedDataset
 
 from src.downloaders.downloader import AsyncDownloader
 
@@ -19,7 +19,7 @@ def _persist_collected_datasets(
     dataset_persistence_repo_provider().save(dataset)
 
 
-class ImdbDailyUpdatedDatasetCollector(DataSourceCollector):
+class ImdbDailyUpdatedDatasetCollector(DataSourceCollector[ImdbDailyUpdatedDataset]):
     def __init__(
         self,
         downloader: AsyncDownloader,
@@ -34,9 +34,9 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector):
         self.__dataset_persistence_repo_provider = dataset_persistence_repo_provider
         self.__downloader = downloader
 
-    def collect(self, datasets: Set[Dataset]) -> None:
-        parsed_dataset_enums: Set[Dataset] = self.handle_cli_enums(
-            set(type(list(datasets)[0])), datasets, type(list(datasets)[0]).ALL
+    def collect(self, datasets: Set[ImdbDailyUpdatedDataset]) -> None:
+        parsed_dataset_enums: Set[ImdbDailyUpdatedDataset] = self.handle_cli_enums(
+            set(ImdbDailyUpdatedDataset), datasets, ImdbDailyUpdatedDataset.ALL
         )  # this parsing of the datasets enum is done here because other collectors might not need to do this parsing
         asyncio.run(self.__downloader.download(parsed_dataset_enums))
         usable_cores: int = min(
