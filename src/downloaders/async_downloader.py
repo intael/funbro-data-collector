@@ -1,15 +1,14 @@
+import asyncio
 from asyncio import as_completed
 from collections.abc import Coroutine
-from typing import List, Set
 
 from src.datasets import Dataset
-from src.downloaders.downloader import AsyncDownloader
-from src.raw_data_container import RawData
+from src.downloaders.downloader import Downloader
 from src.repositories.dataset_source_repository import DatasetSourceRepository
 from src.serializers.serializer import Serializer
 
 
-class GenericAsyncDownloader(AsyncDownloader[Dataset]):
+class AsyncDownloader(Downloader[Dataset]):
     def __init__(
         self,
         dataset_repository: DatasetSourceRepository,
@@ -18,10 +17,12 @@ class GenericAsyncDownloader(AsyncDownloader[Dataset]):
         self.__dataset_repository = dataset_repository
         self.__serializer = serializer
 
-    async def download(self, datasets: Set[Dataset]) -> None:
-        awaitables: List[Coroutine] = [
+    def download(self, datasets: set[Dataset]) -> None:
+        coroutines: list[Coroutine] = [
             self.__dataset_repository.get(dataset) for dataset in datasets
         ]
-        for result in as_completed(awaitables):
-            raw_data: RawData[bytes] = await result
-            self.__serializer.serialize(raw_data)
+        asyncio.run(self.__run_download_coroutines(coroutines))
+
+    async def __run_download_coroutines(self, coroutines: list[Coroutine]):
+        for result in as_completed(coroutines):
+            self.__serializer.serialize(await result)

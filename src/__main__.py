@@ -38,5 +38,5 @@ datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
 
 
 if __name__ == "__main__":
-    collector: DataSourceCollector = CollectorFactory.build_collector(data_source)
+    collector: DataSourceCollector[Dataset] = CollectorFactory.build_collector(data_source)
     collector.collect(datasets)

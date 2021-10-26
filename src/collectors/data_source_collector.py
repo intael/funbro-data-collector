@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Generic, Set, TypeVar
+from typing import Generic, TypeVar
 
 from typeguard import typechecked
 
@@ -10,17 +10,17 @@ T = TypeVar("T", bound=Dataset, covariant=True)
 
 class DataSourceCollector(ABC, Generic[T]):
     @abstractmethod
-    def collect(self, datasets: Set[T]) -> None:
+    def collect(self, datasets: set[T]) -> None:
         raise NotImplementedError()
 
     @classmethod
     @typechecked
     def handle_cli_enums(
         cls,
-        all_constant_values: Set[T],
-        chosen_constant_values: Set[T],
+        all_constant_values: set[T],
+        chosen_constant_values: set[T],
         all_constant: Dataset,
-    ) -> Set[T]:
+    ) -> set[T]:
         if len(chosen_constant_values) > 1 and all_constant in chosen_constant_values:
             raise ValueError(
                 f"The 'ALL' token has been chosen for the dimension {type(all_constant).__name__}, but it is not the"
