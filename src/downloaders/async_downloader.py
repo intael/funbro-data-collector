@@ -23,6 +23,6 @@ class AsyncDownloader(Downloader[Dataset]):
         ]
         asyncio.run(self.__run_download_coroutines(coroutines))
 
-    async def __run_download_coroutines(self, coroutines: list[Coroutine]):
+    async def __run_download_coroutines(self, coroutines: list[Coroutine]) -> None:
         for result in as_completed(coroutines):
             self.__serializer.serialize(await result)

@@ -12,7 +12,7 @@ bash:
 
 .PHONY: build
 build:
-	docker-compose build $(APP_CONTAINER)
+	docker-compose build  $(APP_CONTAINER)
 
 .PHONY: rebuild_db
 rebuild_db:

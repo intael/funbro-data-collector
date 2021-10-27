@@ -2,7 +2,7 @@ import argparse
 import functools
 from argparse import ArgumentParser
 
-from cli.cli_parsable import parse_cli_string_to_enum
+from src.cli.cli_parsable import parse_cli_string_to_enum
 from src.datasets import ImdbDailyUpdatedDataset
 from src.datasources import DataSource
 
@@ -40,7 +40,7 @@ def _attach_datasource_subparser(
         f"--{DATASETS_ARGUMENT}",
         required=True,
         nargs="+",
-        type=functools.partial(parse_cli_string_to_enum, enum_type=ImdbDailyUpdatedDataset),
+        type=lambda string: parse_cli_string_to_enum(string, enum_type=ImdbDailyUpdatedDataset),
         choices=set(ImdbDailyUpdatedDataset),
         help="Datasets to download",
     )

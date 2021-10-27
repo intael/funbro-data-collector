@@ -29,13 +29,13 @@ make run
 You can ask for help to see what's available:
 
 ```shell
-docker-compose run funbro-data-collector python --help
+docker-compose run funbro-data-collector python -m src --help
 ```
 
 Each data source can potentially accept different arguments. You can check that invoking its sub-argument parser:
 
 ```shell
-docker-compose run funbro-data-collector python IMDB_DAILY --help
+docker-compose run funbro-data-collector python -m src IMDB_DAILY --help
 ```
 
 ### Development

@@ -2,7 +2,7 @@ import logging
 import sys
 from typing import Any, Dict, Set
 
-from cli.argument_parser_factory import (
+from src.cli.argument_parser_factory import (
     DATA_SOURCE,
     DATASETS_ARGUMENT,
     DEBUG_FLAG,
@@ -35,7 +35,6 @@ logger.setLevel(logging.DEBUG if arguments[DEBUG_FLAG] else logging.INFO)
 
 data_source: DataSource = DataSource[arguments[DATA_SOURCE]]
 datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
-
 
 if __name__ == "__main__":
     collector: DataSourceCollector[Dataset] = CollectorFactory.build_collector(data_source)
