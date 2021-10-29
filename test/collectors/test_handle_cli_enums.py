@@ -18,14 +18,12 @@ def test_original_values_are_returned_without_all():
 
 def test_all_values_are_returned_when_all_is_included():
     values = {ImdbDailyUpdatedDataset.ALL}
-    parsed_values = list(
-        DataSourceCollector.handle_cli_enums(
-            set(ImdbDailyUpdatedDataset),
-            values,
-            ImdbDailyUpdatedDataset.ALL,
-        )
+    parsed_values = DataSourceCollector.handle_cli_enums(
+        set(ImdbDailyUpdatedDataset),
+        values,
+        ImdbDailyUpdatedDataset.ALL,
     )
-    all_values = list(set(ImdbDailyUpdatedDataset))
+    all_values = set(ImdbDailyUpdatedDataset)
     all_values.remove(ImdbDailyUpdatedDataset.ALL)
     assert parsed_values == all_values
 
