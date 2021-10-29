@@ -2,6 +2,6 @@ from enum import Enum, auto, unique
 
 
 @unique
-class Environment(Enum):
+class AppEnvironment(Enum):
     PRODUCTION = auto()
     DEVELOPMENT = auto()

@@ -2,14 +2,13 @@ from typing import Optional
 
 from pydantic import BaseSettings, Field, validator
 
-from src.environment import Environment
+from src.app_environment import AppEnvironment
 
 ENVIRON_KEY = "environment"
 
 
 class PostgresConnectionArguments(BaseSettings):
-
-    environment: Environment = Field(env="ENVIRONMENT")
+    environment: AppEnvironment = Field(env="ENVIRONMENT")
     host: str = Field(env="POSTGRES_DATABASE_HOST_FIELD")
     dbname: str = Field(env="POSTGRES_DATABASE_NAME")
     user: str = Field(env="POSTGRES_DATABASE_USER_FIELD")
@@ -25,42 +24,28 @@ class PostgresConnectionArguments(BaseSettings):
         env_file_encoding = "utf-8"
 
     @validator(ENVIRON_KEY, pre=True)
-    def validate_environment(cls, v: str) -> Environment:
-        envs = [value for value in Environment]
-        if not isinstance(Environment[v.upper()], Environment):
-            raise ValueError(f"Invalid environment, it should be one of {envs}")
-        return Environment[v.upper()]
+    def validate_environment(cls, v: str) -> AppEnvironment:
+        try:
+            return AppEnvironment[v.upper()]
+        except KeyError:
+            raise ValueError(f"Invalid environment, it should be one of {list(AppEnvironment)}")
 
     @validator("sslmode")
     def validate_sslmode(cls, v: str, values: dict[str, str]) -> str:
-        if (values[ENVIRON_KEY] == Environment.PRODUCTION and v != "require") or (
-            values[ENVIRON_KEY] == Environment.DEVELOPMENT and v != "disable"
+        if (values[ENVIRON_KEY] == AppEnvironment.PRODUCTION and v != "require") or (
+            values[ENVIRON_KEY] == AppEnvironment.DEVELOPMENT and v != "disable"
         ):
             raise ValueError(
                 "The sslmode argument should be 'require' when the environment is production and 'disable' when the environment is development."
             )
         return v
 
-    @validator("sslcert")
-    def validate_sslcert(cls, v: str, values: dict[str, str]) -> str:
-        if values[ENVIRON_KEY] == Environment.PRODUCTION and not v:
+    @validator("sslcert", "sslkey", "sslrootcert")
+    def validate_ssl_credentials(
+        cls, v: Optional[str], values: dict[str, str], field: str
+    ) -> Optional[str]:
+        if values[ENVIRON_KEY] == AppEnvironment.PRODUCTION and not v:
             raise ValueError(
-                "The sslcert argument was found to be null with Environment=production."
-            )
-        return v
-
-    @validator("sslkey")
-    def validate_sslkey(cls, v: str, values: dict[str, str]) -> str:
-        if values[ENVIRON_KEY] == Environment.PRODUCTION and not v:
-            raise ValueError(
-                "The sslkey argument was found to be null with Environment=production."
-            )
-        return v
-
-    @validator("sslrootcert")
-    def validate_sslrootcert(cls, v: str, values: dict[str, str]) -> str:
-        if values[ENVIRON_KEY] == Environment.PRODUCTION and not v:
-            raise ValueError(
-                "The sslrootcert argument was found to be null with Environment=production."
+                f"The {field} argument was found to be null with Environment=production."
             )
         return v
