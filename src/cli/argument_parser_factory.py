@@ -1,5 +1,4 @@
 import argparse
-import functools
 from argparse import ArgumentParser
 
 from src.cli.cli_parsable import parse_cli_string_to_enum

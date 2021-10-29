@@ -18,13 +18,6 @@ build:
 rebuild_db:
 	docker-compose stop $(DATABASE) && echo "Y" | docker-compose rm $(DATABASE) && docker-compose up $(DATABASE)
 
-.PHONY: test
-test:
-	docker-compose run $(APP_CONTAINER) pytest
-
-.PHONY: mypy
-mypy:
-	docker-compose run $(APP_CONTAINER) mypy src
 
 .PHONY: up
 up:
@@ -37,3 +30,21 @@ down:
 .PHONY: restart
 restart:
 	docker-compose down && docker-compose up
+
+# Development:
+
+.PHONY: test
+test:
+	docker-compose run $(APP_CONTAINER) tox -e test
+
+.PHONY: flake
+flake:
+	docker-compose run $(APP_CONTAINER) tox -e flake8
+
+.PHONY: mypy
+mypy:
+	docker-compose run $(APP_CONTAINER) tox -e mypy
+
+.PHONY: tox
+tox:
+	docker-compose run $(APP_CONTAINER) tox

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Generic, Set, TypeVar
+from typing import Generic, TypeVar
 
 from src.datasets import Dataset
 

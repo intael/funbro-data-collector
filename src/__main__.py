@@ -1,16 +1,11 @@
 import logging
 import sys
-from typing import Any, Dict, Set
+from argparse import Namespace
+from typing import Set
 
-from src.cli.argument_parser_factory import (
-    DATA_SOURCE,
-    DATASETS_ARGUMENT,
-    DEBUG_FLAG,
-    build_argument_parser,
-)
+from src.cli.argument_parser_factory import build_argument_parser
 from src.cli.exceptions import CLIArgumentCanNotBeParsed
 from src.collectors.collector_factory import CollectorFactory
-from src.collectors.data_source_collector import DataSourceCollector
 from src.datasets import Dataset
 from src.datasources import DataSource
 
@@ -26,16 +21,15 @@ logger = logging.getLogger(__name__)
 argument_parser = build_argument_parser()
 
 try:
-    arguments: Dict[str, Any] = vars(argument_parser.parse_args())
+    arguments: Namespace = argument_parser.parse_args()
 except CLIArgumentCanNotBeParsed as cli_error:
     logger.error(str(cli_error))
     sys.exit(1)
 
-logger.setLevel(logging.DEBUG if arguments[DEBUG_FLAG] else logging.INFO)
+logger.setLevel(logging.DEBUG if arguments.debug else logging.INFO)
 
-data_source: DataSource = DataSource[arguments[DATA_SOURCE]]
-datasets: Set[Dataset] = set(arguments[DATASETS_ARGUMENT])
+data_source: DataSource = DataSource[arguments.data_source]
+datasets: Set[Dataset] = set(arguments.datasets)
 
 if __name__ == "__main__":
-    collector: DataSourceCollector[Dataset] = CollectorFactory.build_collector(data_source)
-    collector.collect(datasets)
+    CollectorFactory.build_collector(data_source).collect(datasets)

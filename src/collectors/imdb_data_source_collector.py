@@ -1,11 +1,11 @@
-import asyncio
 import multiprocessing
 from functools import partial
 from multiprocessing import Pool
 from typing import Set
 
-from dependency_injector.wiring import Provider
+from dependency_injector.providers import Provider
 
+from repositories.dataset_persistance_repository import DatasetPersistanceRepository
 from src.collectors.data_source_collector import DataSourceCollector
 from src.datasets import Dataset, ImdbDailyUpdatedDataset
 from src.downloaders.downloader import Downloader
@@ -13,7 +13,7 @@ from src.downloaders.downloader import Downloader
 
 def _persist_collected_datasets(
     dataset: Dataset,
-    dataset_persistence_repo_provider: Provider,
+    dataset_persistence_repo_provider: Provider[DatasetPersistanceRepository],
 ) -> None:
     dataset_persistence_repo_provider().save(dataset)
 
@@ -22,7 +22,7 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector[ImdbDailyUpdatedDatas
     def __init__(
         self,
         downloader: Downloader,
-        dataset_persistence_repo_provider: Provider,
+        dataset_persistence_repo_provider: Provider[DatasetPersistanceRepository],
     ):
         """
         dataset_persistence_repo_provider is a provider because we need to instantiate it
@@ -33,7 +33,7 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector[ImdbDailyUpdatedDatas
         self.__dataset_persistence_repo_provider = dataset_persistence_repo_provider
         self.__downloader = downloader
 
-    def collect(self, datasets: Set[ImdbDailyUpdatedDataset]) -> None:
+    def collect(self, datasets: set[ImdbDailyUpdatedDataset]) -> None:
         parsed_dataset_enums: Set[ImdbDailyUpdatedDataset] = self.handle_cli_enums(
             set(ImdbDailyUpdatedDataset), datasets, ImdbDailyUpdatedDataset.ALL
         )  # this parsing of the datasets enum is done here because other collectors might not need to do this parsing
