@@ -47,4 +47,4 @@ mypy:
 
 .PHONY: tox
 tox:
-	docker-compose run $(APP_CONTAINER) tox
+	docker-compose run $(APP_CONTAINER) tox -p all

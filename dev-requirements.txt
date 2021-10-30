@@ -1,6 +1,0 @@
-pytest >= 6, < 7
-mypy >= 0, < 1
-flake8 >= 4, < 5
-pytest-cov >= 2, < 3
-hypothesis >= 6, < 7
-black == 21.9b0
