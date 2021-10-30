@@ -17,14 +17,15 @@ def imdb_daily_updated_dataset_collector(mocker: MockerFixture):
 
 @pytest.fixture()
 def multiprocess_pool_apply_fixture():
-    with mock.patch.object(Pool, "apply", return_value=None) as _fixture:
+    with mock.patch.object(Pool, "starmap", return_value=None) as _fixture:
         yield _fixture
 
 
 @pytest.fixture(scope="module")
 def persist_collected_datasets_fixture():
     with mock.patch(
-        "src.collectors.imdb_data_source_collector._persist_collected_datasets", return_value=None
+        "src.collectors.imdb_data_source_collector._persist_collected_datasets",
+        return_value=None,
     ) as _fixture:
         yield _fixture
 
@@ -40,7 +41,10 @@ class TestImdbDailyUpdatedDatasetCollector:
         "datasets",
         [
             {ImdbDailyUpdatedDataset.TITLE_RATINGS},
-            {ImdbDailyUpdatedDataset.NAME_BASICS, ImdbDailyUpdatedDataset.TITLE_AKAS},
+            {
+                ImdbDailyUpdatedDataset.NAME_BASICS,
+                ImdbDailyUpdatedDataset.TITLE_AKAS,
+            },
             {
                 ImdbDailyUpdatedDataset.TITLE_RATINGS,
                 ImdbDailyUpdatedDataset.TITLE_CREW,
@@ -74,7 +78,8 @@ class TestImdbDailyUpdatedDatasetCollector:
         downloader.download.assert_called_with(all_values)
 
     def test_collect_errors_when_called_with_empty_datasets(
-        self, imdb_daily_updated_dataset_collector: ImdbDailyUpdatedDatasetCollector
+        self,
+        imdb_daily_updated_dataset_collector: ImdbDailyUpdatedDatasetCollector,
     ):
         with pytest.raises(ValueError):
             imdb_daily_updated_dataset_collector.collect(set())
@@ -86,19 +91,29 @@ class TestImdbDailyUpdatedDatasetCollector:
         persist_collected_datasets_fixture,
         multiprocess_pool_apply_fixture,
     ):
-        datasets = {ImdbDailyUpdatedDataset.NAME_BASICS, ImdbDailyUpdatedDataset.TITLE_AKAS}
+        datasets = {
+            ImdbDailyUpdatedDataset.NAME_BASICS,
+            ImdbDailyUpdatedDataset.TITLE_AKAS,
+        }
         persistence_repo_provider = mocker.Mock()
         collector = ImdbDailyUpdatedDatasetCollector(mocker.Mock(), persistence_repo_provider)
         handle_cli_args_fixture.return_value = datasets
         collector.collect(datasets)
         multiprocess_pool_apply_fixture.assert_called_once_with(
-            persist_collected_datasets_fixture, (persistence_repo_provider, datasets)
+            func=persist_collected_datasets_fixture,
+            iterable={(dataset, persistence_repo_provider) for dataset in datasets},
         )
 
     def test_collect_calls_downloaders_download_method_with_the_right_arg(
-        self, mocker: MockerFixture, handle_cli_args_fixture, multiprocess_pool_apply_fixture
+        self,
+        mocker: MockerFixture,
+        handle_cli_args_fixture,
+        multiprocess_pool_apply_fixture,
     ):
-        datasets = {ImdbDailyUpdatedDataset.NAME_BASICS, ImdbDailyUpdatedDataset.TITLE_AKAS}
+        datasets = {
+            ImdbDailyUpdatedDataset.NAME_BASICS,
+            ImdbDailyUpdatedDataset.TITLE_AKAS,
+        }
         downloader = mocker.Mock()
         handle_cli_args_fixture.return_value = datasets
         downloader.download = mocker.Mock(return_value=None)

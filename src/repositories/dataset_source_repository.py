@@ -10,4 +10,5 @@ T = TypeVar("T")
 class DatasetSourceRepository(ABC, Generic[T]):
     @abstractmethod
     async def get(self, dataset: Dataset) -> RawData[T]:
-        raise NotImplementedError()
+        """Retrieves a given dataset from a source."""
+        raise NotImplementedError

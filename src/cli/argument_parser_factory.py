@@ -32,7 +32,8 @@ def _attach_datasource_subparser(
         help="Data Sources", required=True, dest=DATA_SOURCE
     )
     imdb_parser = data_source_subparser.add_parser(
-        DataSource.IMDB_DAILY.value, help="Imdb daily updated datasets collector"
+        DataSource.IMDB_DAILY.value,
+        help="Imdb daily updated datasets collector",
     )
 
     imdb_parser.add_argument(

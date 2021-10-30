@@ -16,7 +16,10 @@ def test_validate_environment_errors_when_value_is_invalid():
 
 @pytest.mark.parametrize(
     "value,environment",
-    [("require", AppEnvironment.PRODUCTION), ("disable", AppEnvironment.DEVELOPMENT)],
+    [
+        ("require", AppEnvironment.PRODUCTION),
+        ("disable", AppEnvironment.DEVELOPMENT),
+    ],
 )
 def test_validate_sslmode_happy_path(value: str, environment: AppEnvironment):
     values = {ENVIRON_KEY: environment}
@@ -25,7 +28,10 @@ def test_validate_sslmode_happy_path(value: str, environment: AppEnvironment):
 
 @pytest.mark.parametrize(
     "value,environment",
-    [("disable", AppEnvironment.PRODUCTION), ("require", AppEnvironment.DEVELOPMENT)],
+    [
+        ("disable", AppEnvironment.PRODUCTION),
+        ("require", AppEnvironment.DEVELOPMENT),
+    ],
 )
 def test_validate_sslmode_errors_when_environ_and_value_combo_is_invalid(
     value: str, environment: AppEnvironment

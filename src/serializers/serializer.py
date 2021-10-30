@@ -9,4 +9,4 @@ T = TypeVar("T")
 class Serializer(ABC, Generic[T]):
     @abstractmethod
     def serialize(self, raw_data: RawData[T]) -> None:
-        raise NotImplementedError()
+        """Serializes downloaded data to a given data format."""

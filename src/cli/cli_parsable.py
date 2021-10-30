@@ -23,5 +23,5 @@ def parse_cli_string_to_enum(string: str, enum_type: Type[T]) -> T:
         return enum_type[string.upper().strip()]
     except KeyError:
         raise CLIArgumentCanNotBeParsed(
-            f"CLI Argument {string} can not be parsed. Valid arguments are: {set(enum_type)}"
+            f"CLI Argument '{string}' can not be parsed. Valid arguments are: {set(enum_type)}"
         )

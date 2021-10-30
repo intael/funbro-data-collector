@@ -35,16 +35,16 @@ restart:
 
 .PHONY: test
 test:
-	docker-compose run $(APP_CONTAINER) tox -e test
+	docker-compose run --rm $(APP_CONTAINER) tox -e test
 
 .PHONY: flake
 flake:
-	docker-compose run $(APP_CONTAINER) tox -e flake8
+	docker-compose run --rm $(APP_CONTAINER) tox -e flake8
 
 .PHONY: mypy
 mypy:
-	docker-compose run $(APP_CONTAINER) tox -e mypy
+	docker-compose run --rm $(APP_CONTAINER) tox -e mypy
 
 .PHONY: tox
 tox:
-	docker-compose run $(APP_CONTAINER) tox -p all
+	docker-compose run --rm $(APP_CONTAINER) tox -p all

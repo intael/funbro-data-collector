@@ -5,7 +5,10 @@ from src.datasets import ImdbDailyUpdatedDataset
 
 
 def test_original_values_are_returned_without_all():
-    values = {ImdbDailyUpdatedDataset.TITLE_EPISODE, ImdbDailyUpdatedDataset.TITLE_CREW}
+    values = {
+        ImdbDailyUpdatedDataset.TITLE_EPISODE,
+        ImdbDailyUpdatedDataset.TITLE_CREW,
+    }
     assert (
         DataSourceCollector.handle_cli_enums(
             set(ImdbDailyUpdatedDataset),

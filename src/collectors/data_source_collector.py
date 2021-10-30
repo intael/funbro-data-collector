@@ -11,7 +11,7 @@ T = TypeVar("T", bound=Dataset, covariant=True)
 class DataSourceCollector(ABC, Generic[T]):
     @abstractmethod
     def collect(self, datasets: set[T]) -> None:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @classmethod
     @typechecked

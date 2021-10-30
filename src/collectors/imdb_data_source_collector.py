@@ -42,7 +42,10 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector[ImdbDailyUpdatedDatas
         self.__downloader.download(parsed_dataset_enums)
         usable_cores: int = min(multiprocessing.cpu_count() - 1, len(parsed_dataset_enums))
         with Pool(usable_cores) as process_pool:
-            process_pool.apply(
-                _persist_collected_datasets,
-                (self.__dataset_persistence_repo_provider, parsed_dataset_enums),
+            process_pool.starmap(
+                func=_persist_collected_datasets,
+                iterable={
+                    (dataset, self.__dataset_persistence_repo_provider)
+                    for dataset in parsed_dataset_enums
+                },
             )
