@@ -6,12 +6,12 @@ from dependency_injector.providers import Provider
 from src.collectors.data_source_collector import DataSourceCollector
 from src.datasets import Dataset, ImdbDailyUpdatedDataset
 from src.downloaders.downloader import Downloader
-from src.repositories.dataset_persistance_repository import DatasetPersistanceRepository
+from src.repositories.dataset_persistance_repository import DatasetPersistenceRepository
 
 
 def _persist_collected_datasets(
     dataset: Dataset,
-    dataset_persistence_repo_provider: Provider[DatasetPersistanceRepository],
+    dataset_persistence_repo_provider: Provider[DatasetPersistenceRepository],
 ) -> None:
     dataset_persistence_repo_provider().save(dataset)
 
@@ -20,7 +20,7 @@ class ImdbDailyUpdatedDatasetCollector(DataSourceCollector[ImdbDailyUpdatedDatas
     def __init__(
         self,
         downloader: Downloader,
-        dataset_persistence_repo_provider: Provider[DatasetPersistanceRepository],
+        dataset_persistence_repo_provider: Provider[DatasetPersistenceRepository],
     ):
         """
         dataset_persistence_repo_provider is a provider because we need to instantiate it

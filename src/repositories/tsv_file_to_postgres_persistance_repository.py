@@ -4,12 +4,12 @@ import os
 import psycopg2
 
 from src.datasets import Dataset
-from src.repositories.dataset_persistance_repository import DatasetPersistanceRepository
+from src.repositories.dataset_persistance_repository import DatasetPersistenceRepository
 from src.repositories.postgres.connection_arguments import ENVIRON_KEY, PostgresConnectionArguments
 from src.serializers.serializers_container import SerializersContainer
 
 
-class TSVFileToPostgresPersistanceRepository(DatasetPersistanceRepository):
+class TSVFileToPostgresPersistenceRepository(DatasetPersistenceRepository):
     def __init__(self, postgres_connection_arguments: PostgresConnectionArguments) -> None:
         connection_args = postgres_connection_arguments.dict()
         connection_args.pop(ENVIRON_KEY)
