@@ -8,7 +8,7 @@ from src.raw_data_container import RawData
 from src.repositories.dataset_source_repository import DatasetSourceRepository
 
 
-class ImdbDailyUpdatedDatasetSourceRepository(DatasetSourceRepository[bytes]):
+class AsyncRawDatasetSourceRepository(DatasetSourceRepository[bytes]):
     @typechecked
     def __init__(self, http_client: AsyncClient):
         self.__http_client = http_client
