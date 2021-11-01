@@ -1,8 +1,9 @@
+from test.conftest import DATASETS_FIXTURE
 from unittest import mock
 
 import pytest
 
-from src.datasets import Dataset, ImdbDailyUpdatedDataset
+from src.datasets import Dataset
 from src.repositories.async_raw_dataset_source_repository import AsyncRawDatasetSourceRepository
 
 
@@ -26,11 +27,6 @@ def async_http_client(async_get):
 @pytest.fixture()
 def dataset_source_repo_instance(async_http_client):
     return AsyncRawDatasetSourceRepository(async_http_client)
-
-
-DATASETS_FIXTURE = {
-    dataset for dataset in set(ImdbDailyUpdatedDataset) if dataset != ImdbDailyUpdatedDataset.ALL
-}
 
 
 class TestAsyncRawDatasetSourceRepository:

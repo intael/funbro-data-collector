@@ -1,5 +1,4 @@
 import asyncio
-from asyncio import as_completed
 from collections.abc import Coroutine
 
 from src.datasets import Dataset
@@ -24,5 +23,5 @@ class AsyncDownloader(Downloader[Dataset]):
         asyncio.run(self.__run_download_coroutines(coroutines))
 
     async def __run_download_coroutines(self, coroutines: list[Coroutine]) -> None:
-        for result in as_completed(coroutines):
+        for result in asyncio.as_completed(coroutines):
             self.__serializer.serialize(await result)
