@@ -16,4 +16,4 @@ repos:
     rev: 5.8.0
     hooks:
       - id: isort
-        entry: isort --profile black
+        entry: isort --profile black --multi-line 3 --trailing-comma --use-parentheses --line-length 100

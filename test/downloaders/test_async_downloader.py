@@ -1,4 +1,3 @@
-from test.conftest import DATASETS_FIXTURE
 from unittest import mock
 
 import pytest
@@ -27,16 +26,18 @@ def downloader_instance(dataset_source_repo, serializer):
 
 
 class TestAsyncDownloader:
-    def test_downloads_are_awaited(self, downloader_instance, dataset_source_repo):
-        downloader_instance.download(DATASETS_FIXTURE)
+    def test_downloads_are_awaited(
+        self, downloader_instance, dataset_source_repo, all_imdb_datasets
+    ):
+        downloader_instance.download(all_imdb_datasets)
         dataset_source_repo.get.assert_has_awaits(
-            [mock.call(dataset) for dataset in DATASETS_FIXTURE], any_order=True
+            [mock.call(dataset) for dataset in all_imdb_datasets], any_order=True
         )
 
     def test_downloaded_datasets_are_serialized(
-        self, downloader_instance, dataset_source_repo, serializer
+        self, downloader_instance, dataset_source_repo, serializer, all_imdb_datasets
     ):
-        downloader_instance.download(DATASETS_FIXTURE)
+        downloader_instance.download(all_imdb_datasets)
         serializer.serialize.assert_has_calls(
-            [mock.call(dataset_source_repo.get.return_value) for _ in DATASETS_FIXTURE]
+            [mock.call(dataset_source_repo.get.return_value) for _ in all_imdb_datasets]
         )
